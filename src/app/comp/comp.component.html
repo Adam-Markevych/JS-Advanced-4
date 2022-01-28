@@ -1,0 +1,74 @@
+<ng-container *ngIf="add; else elseTemplate">
+    <div class="fon">
+    </div>
+    <div class='add-contact'>
+        <h3>Add phone</h3>
+        <div class="block-add">
+            <input type="text" (input)="checkFirstName()" [(ngModel)]="firsName" placeholder="first name goes here">
+            <input type="text" (input)="checkLastName()" [(ngModel)]="lastName" placeholder="second name goes here">
+            <input type="text" (input)="checkNumber()" [(ngModel)]="number" placeholder="number phone goes here">
+        </div>
+        <div class="add-menu">
+            <ng-container *ngIf="edit; else elseTemplate">
+                <button type="submit" [disabled]= "btn_save" (click)="btnSave()">Save</button>
+                <button type="submit" class="btn-close" (click)="btnClose()">Close</button>
+            </ng-container>
+            <ng-template #elseTemplate>
+                <button type="submit" [disabled]= "btn_save_edit" (click)="btn_editSave()">Save</button>
+                <button type="submit" class="btn-close" (click)="btnClose()">Close</button>
+            </ng-template>
+        </div>
+       
+    </div>
+</ng-container>
+<ng-template #elseTemplate>
+    
+</ng-template> 
+<div class="container">
+    
+    <div class="title">
+        <h1>My phone book</h1>
+    </div>
+    <hr>
+    <div class="menu">
+        <input type="text" (input)="checkSearch()" [(ngModel)]="field" placeholder="search text goes here">
+        <button type="submit" [disabled] = "disabledAdd" (click)="btnAdd()">Add</button>
+    </div>
+    <hr>
+    <div class="contact"> 
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                       First Name
+                        <button (click)="changeSort('asc')">A-Z</button>
+                        <button (click)="changeSort('desc')">Z-A</button>
+                    </th>
+                    <th>
+                        Last Name
+                        <button (click)="changeSort1('asc1')">A-Z</button>
+                        <button (click)="changeSort1('desc1')">Z-A</button>
+                    </th>
+                    <th>
+                        Number
+                        <button (click)="changeSort2('asc2')">A-Z</button>
+                        <button (click)="changeSort2('desc2')">Z-A</button>
+                    </th>
+                    <th>Edit</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
+            <tbody>   
+            <tr *ngFor="let book of arrPhoneBook | sort:type  | sort1:type1 | sort2: type2 | search:field; let i = index">
+                    <td>{{ book.firstName | titlecase }}</td>
+                    <td>{{ book.lastName | titlecase }}</td>
+                    <td>{{ book.number }}</td>
+                    <td><button type="submit" (click)="btnEdit(i)"  class="table-btn btn-edit">Edit</button></td>
+                    <td><button type="submit" (click)="btnDelete(i)" class="table-btn btn-delete">Delete</button></td>
+                </tr>
+            </tbody>
+        </table>
+        <hr>
+    </div>
+</div> 
+
